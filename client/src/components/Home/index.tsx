@@ -6,9 +6,24 @@ import {
   Stack,
   Box,
 } from "@mui/material";
+import { useState } from "react";
 import classes from "./styles.module.scss";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const [input, setInput] = useState("");
+  const navigate = useNavigate();
+  console.log(input);
+  const shortenUrl = async () => {
+    if (input) {
+      const { data } = await axios.post("http://localhost:3333/", {
+        origUrl: input,
+      });
+      console.log(data);
+      navigate("/short");
+    }
+  };
   return (
     <div className={classes.wrapper}>
       <Container maxWidth="sm">
@@ -26,11 +41,17 @@ const Home = () => {
               sx={{ justifyContent: "center" }}
             >
               <TextField
+                value={input}
                 id="outlined-search"
                 label="Enter the link here"
                 type="search"
+                onChange={(e: any) => {
+                  setInput(e.target.value);
+                }}
               />
-              <Button variant="contained">Shorten URL</Button>
+              <Button onClick={shortenUrl} variant="contained">
+                Shorten URL
+              </Button>
             </Stack>
             <Typography align="center" variant="h5" gutterBottom>
               It is a free tool to shorten URLs and generate short links URL
