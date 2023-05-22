@@ -5,11 +5,13 @@ const mongoose = require("mongoose");
 const shortid = require("shortid");
 const utils = require("./utils/utils");
 const Url = require("./models/Urls");
+const bodyParser = require("body-parser");
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
+app.use(bodyParser());
 
 app.use(express.json());
 
