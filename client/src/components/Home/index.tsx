@@ -1,26 +1,22 @@
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  Stack,
-  Box,
-} from "@mui/material";
-import { useState } from "react";
-import classes from "./styles.module.scss";
+import { TextField, Button, Typography, Container, Stack, Box } from "@mui/material";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AxiosResponse } from "../../types/url";
+import classes from "./styles.module.scss";
 
 const Home = () => {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
-  console.log(input);
+  const dispatch = useDispatch();
+
   const shortenUrl = async () => {
     if (input) {
-      const { data } = await axios.post("http://localhost:3333/", {
+      const { data }: AxiosResponse = await axios.post("http://localhost:3333/", {
         origUrl: input,
       });
-      console.log(data);
+      dispatch({ type: "SET_URL", payload: data });
       navigate("/short");
     }
   };
@@ -30,22 +26,18 @@ const Home = () => {
         <Typography align="center" variant="h2" gutterBottom>
           Short Url
         </Typography>
-        <Box component="div" className={classes.urlContainer}>
+        <Box className={classes.urlContainer}>
           <Stack direction="column" spacing={3}>
             <Typography align="center" variant="h3" gutterBottom>
               Paste Url to be shortened
             </Typography>
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{ justifyContent: "center" }}
-            >
+            <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
               <TextField
                 value={input}
                 id="outlined-search"
                 label="Enter the link here"
                 type="search"
-                onChange={(e: any) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setInput(e.target.value);
                 }}
               />
@@ -54,9 +46,8 @@ const Home = () => {
               </Button>
             </Stack>
             <Typography align="center" variant="h5" gutterBottom>
-              It is a free tool to shorten URLs and generate short links URL
-              shortener allows to create a shortened link making it easy to
-              share
+              It is a free tool to shorten URLs and generate short links URL shortener allows to create a shortened link
+              making it easy to share
             </Typography>
           </Stack>
         </Box>
@@ -73,9 +64,8 @@ const Home = () => {
             </Stack>
           </Stack>
           <Typography align="center" variant="h5" gutterBottom>
-            Custom short links, powerful dashboard, detailed analytics, API, UTM
-            builder, QR codes, browser extension, 50+ app integrations and
-            support
+            Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension,
+            50+ app integrations and support
           </Typography>
         </Box>
       </Container>
