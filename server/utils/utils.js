@@ -1,3 +1,12 @@
+const bycrpt = require("bcryptjs");
+
+const validateUserInput = (email, password) => {
+  return email && password;
+};
+
+const comparePassword = (password, hashedPassword) => {
+  return bycrpt.compareSync(password, hashedPassword);
+};
 function validateUrl(value) {
   var urlPattern = new RegExp(
     "^(https?:\\/\\/)?" + // validate protocol
@@ -11,5 +20,13 @@ function validateUrl(value) {
 
   return !!urlPattern.test(value);
 }
+const sendToken = (user, statusCode, res) => {
+  const token = user.generateJwtFromUser();
 
-module.exports = { validateUrl };
+  return res.status(statusCode).json({
+    success: true,
+    token,
+  });
+};
+
+module.exports = { validateUrl, validateUserInput, comparePassword, sendToken };
