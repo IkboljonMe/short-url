@@ -1,9 +1,29 @@
-import { TextField, Box, Stack, Typography } from "@mui/material";
+import { TextField, Box, Stack, Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const loginHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("http://localhost:3333/login", { email, password });
+      localStorage.setItem("authToken", data.token);
+      setTimeout(() => {
+        navigate("/");
+      }, 1800);
+    } catch (error: unknown) {
+      console.log(error);
+      setError("Invalid Credentilas");
+      setTimeout(() => {
+        setError("");
+      }, 4500);
+    }
+  };
   return (
     <Stack direction="column" alignItems="center">
       <Typography p={3} variant="h2">
@@ -12,6 +32,11 @@ const Login = () => {
       <Typography p={3} variant="h6">
         Don't you have an account? <Link to="/register">Register here</Link>
       </Typography>
+      {error && (
+        <Typography p={3} variant="h6">
+          Invalid Credentials
+        </Typography>
+      )}
       <Box
         component="form"
         sx={{
@@ -40,6 +65,9 @@ const Login = () => {
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           />
+          <Button onClick={loginHandler} variant="contained">
+            Register
+          </Button>
         </Stack>
       </Box>
     </Stack>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AxiosResponse } from "../../types/url";
+import { Link } from "react-router-dom";
 import classes from "./styles.module.scss";
 
 const Home = () => {
@@ -46,8 +47,8 @@ const Home = () => {
               </Button>
             </Stack>
             <Typography align="center" variant="h5" gutterBottom>
-              It is a free tool to shorten URLs and generate short links URL shortener allows to create a shortened link
-              making it easy to share
+              It is a free tool to shorten URLs and generate short links URL shortener allows to create a shortened link making it
+              easy to share
             </Typography>
           </Stack>
         </Box>
@@ -58,14 +59,17 @@ const Home = () => {
             </Typography>
 
             <Stack direction="row" p={2} sx={{ justifyContent: "center" }}>
-              <Button variant="contained" size="large">
-                Create Accaunt
-              </Button>
+              <Link to="/register">
+                {" "}
+                <Button variant="contained" size="large">
+                  Create Accaunt
+                </Button>
+              </Link>
             </Stack>
           </Stack>
           <Typography align="center" variant="h5" gutterBottom>
-            Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension,
-            50+ app integrations and support
+            Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension, 50+ app
+            integrations and support
           </Typography>
         </Box>
       </Container>
