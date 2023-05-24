@@ -1,5 +1,5 @@
 import { TextField, Button, Typography, Container, Stack, Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,8 +9,20 @@ import classes from "./styles.module.scss";
 
 const Home = () => {
   const [input, setInput] = useState("");
+  const bool = localStorage.getItem("authToken") ? true : false;
+  const [auth, setAuth] = useState(bool);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  useEffect(() => {
+    setAuth(bool);
+    setTimeout(() => {
+      console.log("Logged out");
+    }, 1600);
+  }, [bool]);
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/");
+  };
 
   const shortenUrl = async () => {
     if (input) {
@@ -24,14 +36,24 @@ const Home = () => {
   return (
     <div className={classes.wrapper}>
       <Container maxWidth="sm">
-        <Typography align="center" variant="h2" gutterBottom>
-          Short Url
-        </Typography>
-        <Box className={classes.urlContainer}>
+        <Stack
+          direction="row"
+          spacing={10}
+          sx={{ display: "flex", alignContent: "center", textAlign: "center", justifyContent: "center", alignItems: "center" }}
+        >
+          <Typography align="center" variant="h2">
+            Short Url
+          </Typography>
+          <Button onClick={handleLogout} variant="contained">
+            Log out
+          </Button>
+        </Stack>
+        <Box p={5} className={classes.urlContainer}>
           <Stack direction="column" spacing={3}>
             <Typography align="center" variant="h3" gutterBottom>
               Paste Url to be shortened
             </Typography>
+
             <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
               <TextField
                 value={input}
@@ -52,26 +74,28 @@ const Home = () => {
             </Typography>
           </Stack>
         </Box>
-        <Box component="div" className={classes.urlContainer}>
-          <Stack direction="column" spacing={3}>
-            <Typography align="center" variant="h3" gutterBottom>
-              Do you want to keep your data?
-            </Typography>
+        {!auth && (
+          <Box component="div" className={classes.urlContainer}>
+            <Stack direction="column" spacing={3}>
+              <Typography align="center" variant="h3" gutterBottom>
+                Do you want to keep your data?
+              </Typography>
 
-            <Stack direction="row" p={2} sx={{ justifyContent: "center" }}>
-              <Link to="/register">
-                {" "}
-                <Button variant="contained" size="large">
-                  Create Accaunt
-                </Button>
-              </Link>
+              <Stack direction="row" p={2} sx={{ justifyContent: "center" }}>
+                <Link to="/register">
+                  {" "}
+                  <Button variant="contained" size="large">
+                    Create Accaunt
+                  </Button>
+                </Link>
+              </Stack>
             </Stack>
-          </Stack>
-          <Typography align="center" variant="h5" gutterBottom>
-            Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension, 50+ app
-            integrations and support
-          </Typography>
-        </Box>
+            <Typography align="center" variant="h5" gutterBottom>
+              Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension, 50+ app
+              integrations and support
+            </Typography>
+          </Box>
+        )}
       </Container>
     </div>
   );
