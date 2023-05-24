@@ -8,10 +8,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  console.log(`${import.meta.env.VITE_BASE}/login`);
+
   const loginHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:3333/login", { email, password });
+      const { data } = await axios.post(`${import.meta.env.VITE_BASE}/login`, { email, password });
       localStorage.setItem("authToken", data.token);
       setTimeout(() => {
         navigate("/");

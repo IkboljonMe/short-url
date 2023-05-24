@@ -26,7 +26,7 @@ const Home = () => {
 
   const shortenUrl = async () => {
     if (input) {
-      const { data }: AxiosResponse = await axios.post("http://localhost:3333/", {
+      const { data }: AxiosResponse = await axios.post(`${import.meta.env.VITE_BASE}/`, {
         origUrl: input,
       });
       dispatch({ type: "SET_URL", payload: data });

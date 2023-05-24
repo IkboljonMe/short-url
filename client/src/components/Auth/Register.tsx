@@ -22,7 +22,7 @@ const Register = () => {
       return setError("Passwords do not match");
     }
     try {
-      const { data } = await axios.post("http://localhost:3333/register", {
+      const { data } = await axios.post(`${import.meta.env.VITE_BASE}/register`, {
         username,
         email,
         password,
