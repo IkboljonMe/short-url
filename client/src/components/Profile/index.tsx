@@ -11,8 +11,8 @@ const Profile = () => {
         <Typography align="center" variant="h2">
           Profile
         </Typography>
-        {arr.map((url, index) => (
-          <Box key={index}>
+        {arr.map((url) => (
+          <Box key={url}>
             <Stack direction="column" maxWidth="sm">
               <Typography textAlign="center" variant="h5" maxWidth="sm">
                 Long URL
