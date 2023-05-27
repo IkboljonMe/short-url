@@ -30,14 +30,16 @@ const shortenUrl = async (req, res, next) => {
     res.status(400).json("Invalid Original Url");
   }
 };
-const getShortenUrl = async (req, res) => {
+
+const getShortenUrlById = async (req, res) => {
   try {
-    const url = await Url.findOne({ urlId: req.params.urlId });
+    const { urlId } = req.body;
+    const url = await Url.findOne({ urlId });
     console.log("REDIRECT URL", url);
     if (url) {
       url.clicks++;
       url.save();
-      return res.redirect(url.origUrl);
+      return res.status(200).json({ urlId: url.origUrl });
     } else {
       return res.status(404).json("Not found");
     }
@@ -47,4 +49,4 @@ const getShortenUrl = async (req, res) => {
   }
 };
 
-module.exports = { shortenUrl, getShortenUrl };
+module.exports = { shortenUrl, getShortenUrlById };
