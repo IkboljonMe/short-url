@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { shortenUrl, getShortenUrl } = require("../controllers/url");
+const { shortenUrl, getShortenUrlById } = require("../controllers/url");
 
-//post endpoint
 router.post("/", shortenUrl);
-//redirect endpoint
-router.get("/:urlId", getShortenUrl);
+router.post("/urlId", getShortenUrlById);
 
 module.exports = router;
