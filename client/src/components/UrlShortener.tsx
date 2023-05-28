@@ -2,9 +2,10 @@ import { TextField, Button, Typography, Container, Stack, Box } from "@mui/mater
 import { useSelector } from "react-redux";
 import { State } from "../../redux/types/url";
 import Navbar from "./Navbar";
-
+import { useState } from "react";
 const UrlShortener = () => {
   const data = useSelector((state: State) => state.data);
+  const [isCopied, setIsCopied] = useState(false);
   if (!data) return <div>No data</div>;
   return (
     <>
@@ -39,7 +40,18 @@ const UrlShortener = () => {
               </Typography>
               <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
                 <TextField value={data.shortUrl} />
-                <Button variant="contained">Copy URL</Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                  }}
+                  onClick={() => {
+                    navigator.clipboard.writeText(data.shortUrl);
+                    setIsCopied(true);
+                  }}
+                >
+                  {isCopied ? "Copied!" : "Copy URL"}
+                </Button>
               </Stack>
 
               <Container
