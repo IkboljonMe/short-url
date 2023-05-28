@@ -4,6 +4,7 @@ import { State } from "../../redux/types/url";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
+import Footer from "./Footer";
 const UrlShortener = () => {
   const data = useSelector((state: State) => state.data);
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ const UrlShortener = () => {
           </Box>
         </Container>
       </Box>
+      <Footer />
     </>
   );
 };
