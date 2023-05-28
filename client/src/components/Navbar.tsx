@@ -1,7 +1,11 @@
 import { Container, Stack, Typography, Avatar, Box } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const user = useSelector((state: any) => state.user);
+  console.log(user);
+
   return (
     <Box
       component="div"
