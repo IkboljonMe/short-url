@@ -17,6 +17,7 @@ const UrlShortener = () => {
       <Box
         component="div"
         sx={{
+          paddingTop: "20px",
           height: "100vh",
           width: "100%",
           backgroundColor: "#f9f9f9",
