@@ -1,11 +1,14 @@
 import { TextField, Button, Typography, Container, Stack, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { State } from "../../redux/types/url";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
 const UrlShortener = () => {
   const data = useSelector((state: State) => state.data);
+  const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
+  const [isVisitsPageOpen, setIsVisitsPageOpen] = useState(false);
   if (!data) return <div>No data</div>;
   return (
     <>
@@ -62,11 +65,14 @@ const UrlShortener = () => {
               >
                 <Stack direction="row" spacing={2}>
                   <Button
-                    variant="outlined"
+                    variant={isVisitsPageOpen ? "contained" : "outlined"}
                     size="small"
                     sx={{
                       width: "50%",
                       textTransform: "none",
+                    }}
+                    onClick={() => {
+                      setIsVisitsPageOpen(!isVisitsPageOpen);
                     }}
                   >
                     Total number of clicks
@@ -78,11 +84,17 @@ const UrlShortener = () => {
                       width: "50%",
                       textTransform: "none",
                     }}
+                    onClick={() => navigate("/")}
                   >
                     Shorten another URL
                   </Button>
                 </Stack>
               </Container>
+              {isVisitsPageOpen && (
+                <Typography align="center" variant="h6" gutterBottom>
+                  Total number of visits: {data.clicks}
+                </Typography>
+              )}
             </Stack>
           </Box>
         </Container>
