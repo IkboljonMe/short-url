@@ -18,9 +18,13 @@ const UrlSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
-  data: {
+  date: {
     type: String,
     default: Date.now,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
 });
 

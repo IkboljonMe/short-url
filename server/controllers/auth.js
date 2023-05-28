@@ -2,7 +2,7 @@ const User = require("../models/User");
 const {
   validateUserInput,
   comparePassword,
-  sendToken,
+  sendTokenAndUserId,
 } = require("../utils/utils");
 
 const register = async (req, res, next) => {
@@ -12,7 +12,7 @@ const register = async (req, res, next) => {
     email,
     password,
   });
-  sendToken(newUser, 201, res);
+  sendTokenAndUserId(newUser, 201, res);
 };
 
 const login = async (req, res, next) => {
@@ -32,6 +32,6 @@ const login = async (req, res, next) => {
     return next(new Error("No correct password"));
   }
 
-  sendToken(user, 200, res);
+  sendTokenAndUserId(user, 200, res);
 };
 module.exports = { register, login };
