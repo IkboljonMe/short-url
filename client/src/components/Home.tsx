@@ -20,10 +20,10 @@ const Home = () => {
       console.log("Logged out");
     }, 1600);
   }, [bool]);
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("authToken");
+  //   navigate("/");
+  // };
 
   const shortenUrl = async () => {
     if (input) {

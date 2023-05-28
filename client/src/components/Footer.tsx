@@ -1,5 +1,5 @@
-import { Container, Stack, Typography, Avatar } from "@mui/material";
-import { blue, amber } from "@mui/material/colors";
+import { Container, Stack, Typography } from "@mui/material";
+import { amber } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
