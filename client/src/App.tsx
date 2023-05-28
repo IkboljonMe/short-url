@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import UrlShortener from "./components/UrlShortener";
-import { Register, Login } from "./components/Auth/";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import Profile from "./components/Profile";
 import Redirect from "./Redirect";
 function App() {
