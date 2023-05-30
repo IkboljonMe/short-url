@@ -2,7 +2,7 @@ import { Container, Stack, Typography, Avatar, Box } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { clearUser } from "../../redux/reducers/user";
+import { clearUser, setUserUrls } from "../../redux/reducers/user";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -21,8 +21,9 @@ const Navbar = () => {
     navigate("/login");
   };
   const handleProfile = async () => {
-    const response = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
-    console.log(response);
+    const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
+    dispatch(setUserUrls(data));
+    navigate("/profile");
   };
 
   return (
