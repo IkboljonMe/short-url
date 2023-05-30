@@ -9,6 +9,7 @@ const Navbar = () => {
   const auth = useSelector((state: RootState) => state.user.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(auth);
 
   const handleLogout = () => {
     dispatch(clearUser());

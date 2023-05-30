@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const [input, setInput] = useState("");
   const userId = useSelector((state: RootState) => state.user.userId);
+  console.log("@@@", userId);
   const auth = useSelector((state: RootState) => state.user.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Home = () => {
     if (input) {
       const { data }: AxiosResponse = await axios.post(`${import.meta.env.VITE_BASE}/`, {
         origUrl: input,
+        userId,
       });
       dispatch({ type: "SET_URL", payload: data });
       navigate("/short");
