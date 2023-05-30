@@ -1,13 +1,25 @@
 const Url = require("../models/Urls");
 const shortid = require("shortid");
 const utils = require("../utils/utils");
+const User = require("../models/User");
 
 const shortenUrl = async (req, res, next) => {
   console.log("URL HERE", req.body.url);
-  const { origUrl } = req.body;
+  const { origUrl, userId } = req.body;
+
   const urlId = shortid.generate();
   if (utils.validateUrl(origUrl)) {
     try {
+      let user;
+
+      if (userId) {
+        console.log("HERE", userId);
+        user = await User.findById(userId);
+        if (!user) {
+          res.status(401).json("Not user found");
+        }
+      }
+
       let url = await Url.findOne({ origUrl });
       if (url) {
         res.json(url);
@@ -18,8 +30,14 @@ const shortenUrl = async (req, res, next) => {
           shortUrl,
           urlId,
           data: Date.now(),
+          user: userId,
         });
         await url.save();
+        if (user) {
+          user.urls.push(url._id);
+          await user.save();
+        }
+        console.log(user);
         res.json(url);
       }
     } catch (err) {
@@ -48,5 +66,18 @@ const getShortenUrlById = async (req, res) => {
     res.status(500).json("Server Error");
   }
 };
+const getUrls = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId).populate("urls");
+    if (!user) {
+      return res.status(401).json("Not user found");
+    }
+    res.status(200).json(user.urls);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Server Error");
+  }
+};
 
-module.exports = { shortenUrl, getShortenUrlById };
+module.exports = { shortenUrl, getShortenUrlById, getUrls };

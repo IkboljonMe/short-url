@@ -1,7 +1,31 @@
 import { Container, Stack, Typography, Avatar, Box } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { clearUser, setUserUrls } from "../../redux/reducers/user";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
+  const auth = useSelector((state: RootState) => state.user.token);
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(auth);
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigate("/");
+  };
+  const handleLogin = () => {
+    navigate("/login");
+  };
+  const handleProfile = async () => {
+    const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
+    dispatch(setUserUrls(data));
+    navigate("/profile");
+  };
+
   return (
     <Box
       component="div"
@@ -24,8 +48,10 @@ const Navbar = () => {
             Short URL
           </Typography>
           <Stack direction="row" spacing={3} sx={{ justifyContent: "center", alignItems: "center", fontWeight: "500" }}>
-            <Typography variant="h3">Login</Typography>
-            <Avatar></Avatar>
+            <Typography onClick={auth ? handleLogout : handleLogin} variant="h3">
+              {auth ? "Log out" : "Login"}
+            </Typography>
+            {auth && <Avatar onClick={handleProfile} />}
           </Stack>
         </Stack>
       </Container>

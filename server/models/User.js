@@ -22,6 +22,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    urls: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Url",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -1,9 +1,9 @@
 import { urlData } from "../../src/types/url";
-export interface State {
+export type UrlState = {
   data: urlData | null;
-}
+};
 
-export interface Action {
+export type UrlAction = {
   type: string;
   payload: urlData | null;
-}
+};

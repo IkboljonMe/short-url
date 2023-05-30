@@ -3,18 +3,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   console.log(`${import.meta.env.VITE_BASE}/login`);
 
   const loginHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_BASE}/login`, { email, password });
-      localStorage.setItem("authToken", data.token);
+      const { token, userId } = data;
+      dispatch(setUser(token, userId));
       setTimeout(() => {
         navigate("/");
       }, 1800);
