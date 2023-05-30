@@ -1,19 +1,20 @@
-// Action types
-export const SET_AUTH_USER = "SET_AUTH_USER";
-export const CLEAR_AUTH_USER = "CLEAR_AUTH_USER";
+import * as userActions from "./userActions";
 
-// Define types for the payload
-type AuthPayload = {
+export type UserState = {
+  token: string | null;
+  userId: string | null;
+};
+export type UserAction = SetAuthUserAction | ClearAuthUserAction;
+
+type UserPayload = {
   token: string;
   userId: string;
 };
-
-// Define types for the actions
-export type SetAuthUserAction = {
-  type: typeof SET_AUTH_USER;
-  payload: AuthPayload;
+type SetAuthUserAction = {
+  type: typeof userActions.SET_AUTH_USER;
+  payload: UserPayload;
 };
 
-export type ClearAuthUserAction = {
-  type: typeof CLEAR_AUTH_USER;
+type ClearAuthUserAction = {
+  type: typeof userActions.CLEAR_AUTH_USER;
 };

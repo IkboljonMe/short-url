@@ -1,8 +1,8 @@
-import { State, Action } from "../types/url";
-const initialState: State = {
+import { UrlState, UrlAction } from "../types/url";
+const initialState: UrlState = {
   data: null,
 };
-const urlReducer = (state = initialState, action: Action) => {
+const urlReducer = (state = initialState, action: UrlAction) => {
   switch (action.type) {
     case "SET_URL":
       return {

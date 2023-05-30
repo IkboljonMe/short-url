@@ -1,12 +1,13 @@
 import { TextField, Button, Typography, Container, Stack, Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import { State } from "../../redux/types/url";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import Footer from "./Footer";
+import { RootState } from "../../redux/store";
+
 const UrlShortener = () => {
-  const data = useSelector((state: State) => state.data);
+  const data = useSelector((state: RootState) => state.url.data);
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
   const [isVisitsPageOpen, setIsVisitsPageOpen] = useState(false);

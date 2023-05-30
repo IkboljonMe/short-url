@@ -1,37 +1,28 @@
-import { SET_AUTH_USER, CLEAR_AUTH_USER, SetAuthUserAction, ClearAuthUserAction } from "../types/user";
+import * as userActions from "../types/userActions";
 
-type AuthActionTypes = SetAuthUserAction | ClearAuthUserAction;
-
-// Action creators
-export const setAuthUser = (token: string, userId: string): SetAuthUserAction => ({
-  type: SET_AUTH_USER,
+import { UserState, UserAction } from "../types/user";
+export const setAuthUser = (token: string, userId: string) => ({
+  type: userActions.SET_AUTH_USER,
   payload: { token, userId },
 });
 
-export const clearAuthUser = (): ClearAuthUserAction => ({
-  type: CLEAR_AUTH_USER,
+export const clearAuthUser = () => ({
+  type: userActions.CLEAR_AUTH_USER,
 });
-
-// Reducer
-type AuthState = {
-  token: string | null;
-  userId: string | null;
-};
-
-const initialState: AuthState = {
+const initialState: UserState = {
   token: null,
   userId: null,
 };
 
-const userReducer = (state = initialState, action: AuthActionTypes): AuthState => {
+const userReducer = (state = initialState, action: UserAction) => {
   switch (action.type) {
-    case SET_AUTH_USER:
+    case userActions.SET_AUTH_USER:
       return {
         ...state,
         token: action.payload.token,
         userId: action.payload.userId,
       };
-    case CLEAR_AUTH_USER:
+    case userActions.CLEAR_AUTH_USER:
       return initialState;
     default:
       return state;
