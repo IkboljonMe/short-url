@@ -1,5 +1,5 @@
 import { TextField, Button, Typography, Container, Stack, Box } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -7,23 +7,15 @@ import { AxiosResponse } from "../types/url";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [input, setInput] = useState("");
-  const bool = localStorage.getItem("authToken") ? true : false;
-  const [auth, setAuth] = useState(bool);
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const auth = useSelector((state: RootState) => state.user.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
-    setAuth(bool);
-    setTimeout(() => {
-      console.log("Logged out");
-    }, 1600);
-  }, [bool]);
-  // const handleLogout = () => {
-  //   localStorage.removeItem("authToken");
-  //   navigate("/");
-  // };
 
   const shortenUrl = async () => {
     if (input) {

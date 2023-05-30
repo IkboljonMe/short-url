@@ -1,10 +1,22 @@
 import { Container, Stack, Typography, Avatar, Box } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { clearUser } from "../../redux/reducers/user";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const user = useSelector((state: any) => state.user);
-  console.log(user);
+  const auth = useSelector((state: RootState) => state.user.token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigate("/");
+  };
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <Box
@@ -28,8 +40,10 @@ const Navbar = () => {
             Short URL
           </Typography>
           <Stack direction="row" spacing={3} sx={{ justifyContent: "center", alignItems: "center", fontWeight: "500" }}>
-            <Typography variant="h3">Login</Typography>
-            <Avatar></Avatar>
+            <Typography onClick={auth ? handleLogout : handleLogin} variant="h3">
+              {auth ? "Log out" : "Login"}
+            </Typography>
+            {auth && <Avatar />}
           </Stack>
         </Stack>
       </Container>

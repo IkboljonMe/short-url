@@ -1,12 +1,12 @@
 import * as userActions from "../types/userActions";
 
 import { UserState, UserAction } from "../types/user";
-export const setAuthUser = (token: string, userId: string) => ({
+export const setUser = (token: string, userId: string) => ({
   type: userActions.SET_AUTH_USER,
   payload: { token, userId },
 });
 
-export const clearAuthUser = () => ({
+export const clearUser = () => ({
   type: userActions.CLEAR_AUTH_USER,
 });
 const initialState: UserState = {
@@ -18,7 +18,6 @@ const userReducer = (state = initialState, action: UserAction) => {
   switch (action.type) {
     case userActions.SET_AUTH_USER:
       return {
-        ...state,
         token: action.payload.token,
         userId: action.payload.userId,
       };

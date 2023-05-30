@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../redux/reducers/user";
+import { setUser } from "../../redux/reducers/user";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +18,7 @@ const Login = () => {
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_BASE}/login`, { email, password });
       const { token, userId } = data;
-      dispatch(setAuthUser(token, userId));
+      dispatch(setUser(token, userId));
       setTimeout(() => {
         navigate("/");
       }, 1800);
