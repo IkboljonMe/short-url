@@ -66,5 +66,18 @@ const getShortenUrlById = async (req, res) => {
     res.status(500).json("Server Error");
   }
 };
+const getUrls = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId).populate("urls");
+    if (!user) {
+      return res.status(401).json("Not user found");
+    }
+    res.status(200).json(user.urls);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Server Error");
+  }
+};
 
-module.exports = { shortenUrl, getShortenUrlById };
+module.exports = { shortenUrl, getShortenUrlById, getUrls };

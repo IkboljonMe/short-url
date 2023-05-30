@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { clearUser } from "../../redux/reducers/user";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
   const auth = useSelector((state: RootState) => state.user.token);
+  const userId = useSelector((state: RootState) => state.user.userId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log(auth);
@@ -17,6 +19,10 @@ const Navbar = () => {
   };
   const handleLogin = () => {
     navigate("/login");
+  };
+  const handleProfile = async () => {
+    const response = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
+    console.log(response);
   };
 
   return (
@@ -44,7 +50,7 @@ const Navbar = () => {
             <Typography onClick={auth ? handleLogout : handleLogin} variant="h3">
               {auth ? "Log out" : "Login"}
             </Typography>
-            {auth && <Avatar />}
+            {auth && <Avatar onClick={handleProfile} />}
           </Stack>
         </Stack>
       </Container>

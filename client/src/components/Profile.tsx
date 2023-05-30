@@ -2,6 +2,7 @@ import { Typography, Container, Stack, Box, Button, Card } from "@mui/material";
 import { red } from "@mui/material/colors";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+
 const Profile = () => {
   const arr = [1, 2, 3, 4, 5];
   const text =
