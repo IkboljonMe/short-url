@@ -32,6 +32,7 @@ const Home = () => {
       direction="column"
       sx={{
         height: "100vh",
+        position: "relative",
       }}
     >
       <Navbar />
