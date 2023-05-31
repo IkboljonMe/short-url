@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
+import { blue } from "@mui/material/colors";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +38,10 @@ const Login = () => {
         Login
       </Typography>
       <Typography p={3} variant="h6">
-        Don't you have an account? <Link to="/register">Register here</Link>
+        Don't you have an account?{" "}
+        <Link to="/register">
+          <Typography color={blue[500]}>Register here</Typography>
+        </Link>
       </Typography>
       {error && (
         <Typography p={3} variant="h6">
@@ -73,7 +77,7 @@ const Login = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           />
           <Button onClick={loginHandler} variant="contained">
-            Register
+            Log in
           </Button>
         </Stack>
       </Box>

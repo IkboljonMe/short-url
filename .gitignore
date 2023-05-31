@@ -11,4 +11,6 @@ dist/
 .DS_Store
 .env
 .env.local
+.env.production
+
 npm-debug.log*
