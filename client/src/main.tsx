@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import store from "../redux/store.ts";
 import { ThemeProvider } from "@mui/material/styles";
 import "./index.css";
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import theme from "./theme.ts";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
