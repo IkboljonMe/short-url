@@ -153,14 +153,20 @@ const Profile = () => {
   console.log("Profile", urls);
 
   return (
-    <>
+    <Stack
+      direction="column"
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
       <Navbar></Navbar>
       <Box
         component="div"
         sx={{
-          paddingTop: "70px",
+          paddingTop: "120px",
           width: "100%",
-          height: "120%",
           backgroundColor: "#fff",
         }}
       >
@@ -259,7 +265,7 @@ const Profile = () => {
         </Container>
       </Box>
       <Footer />
-    </>
+    </Stack>
   );
 };
 
