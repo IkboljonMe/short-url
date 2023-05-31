@@ -16,7 +16,7 @@ const Navbar = () => {
   const userId = useSelector((state: RootState) => state.user.userId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isSmallScreen = useMediaQuery((theme: Theme) => theme?.breakpoints?.down("sm"));
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const iconSize = isSmallScreen ? 24 : 35;
   const handleProfile: () => void = async () => {
     const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
