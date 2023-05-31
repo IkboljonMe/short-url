@@ -1,4 +1,4 @@
-import { TextField, Button, Typography, Container, Stack, Box } from "@mui/material";
+import { TextField, Button, Typography, Container, Stack, Box, responsiveFontSizes } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,10 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
+import themes from "../theme";
 
 const Home = () => {
+  const theme = responsiveFontSizes(themes);
   const [input, setInput] = useState("");
   const userId = useSelector((state: RootState) => state.user.userId);
   const auth = useSelector((state: RootState) => state.user.token);
@@ -63,7 +65,7 @@ const Home = () => {
             }}
           >
             <Stack direction="column" spacing={3}>
-              <Typography align="center" variant="h3" gutterBottom>
+              <Typography align="center" sx={{ fontSize: theme.typography.h3 }} variant="h3" gutterBottom>
                 Paste Url to be shortened
               </Typography>
 
@@ -81,7 +83,7 @@ const Home = () => {
                   Shorten URL
                 </Button>
               </Stack>
-              <Typography align="center" variant="h5" gutterBottom>
+              <Typography align="center" variant="h5" gutterBottom sx={{ fontSize: theme.typography.h5 }}>
                 It is a free tool to shorten URLs and generate short links URL shortener allows to create a shortened link making
                 it easy to share
               </Typography>
@@ -101,7 +103,7 @@ const Home = () => {
               }}
             >
               <Stack direction="column" spacing={3}>
-                <Typography align="center" variant="h3" gutterBottom>
+                <Typography align="center" variant="h3" gutterBottom sx={{ fontSize: theme.typography.h3 }}>
                   Do you want to keep your data?
                 </Typography>
 
@@ -111,7 +113,7 @@ const Home = () => {
                   </Link>
                 </Stack>
               </Stack>
-              <Typography align="center" variant="h5" p={2} gutterBottom>
+              <Typography align="center" variant="h5" p={2} gutterBottom sx={{ fontSize: theme.typography.h5 }}>
                 Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension, 50+ app
                 integrations and support
               </Typography>
