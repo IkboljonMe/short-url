@@ -34,4 +34,18 @@ const login = async (req, res, next) => {
 
   sendTokenAndUserId(user, 200, res);
 };
-module.exports = { register, login };
+const getUserById = async (req, res, next) => {
+  const { userId } = req.body;
+  const user = await User.findById(userId).populate("urls");
+  if (!user) {
+    res.status(401).json("No user found");
+    return next(new Error("NO user found"));
+  }
+  const { email, urls, username } = user;
+  res.status(201).json({
+    username,
+    email,
+    urls,
+  });
+};
+module.exports = { register, login, getUserById };

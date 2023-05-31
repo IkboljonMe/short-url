@@ -6,6 +6,6 @@ export type urlData = {
   clicks: number;
   date: number;
 };
-export interface AxiosResponse {
+export interface AxiosResponseUrl {
   data: urlData;
 }

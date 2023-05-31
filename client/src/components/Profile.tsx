@@ -3,14 +3,15 @@ import { red, blue } from "@mui/material/colors";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RootState } from "../../redux/store";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiFileCopy2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserUrls } from "../../redux/reducers/user";
+import { clearUser, setUserUrls } from "../../redux/reducers/user";
 import axios from "axios";
 import { urlData } from "../types/url";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
-
+import { useNavigate } from "react-router-dom";
+import { AxiosResponseUser, userData } from "../types/user";
 interface UrlCardProps {
   url: urlData;
   index: number;
@@ -128,10 +129,25 @@ const UrlCard: React.FC<UrlCardProps> = ({ url, index, setCopyMessage, handleOpe
   );
 };
 const Profile = () => {
+  const [userInfo, setUserInfo] = useState<userData>({});
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const [copyMessage, setCopyMessage] = useState("Link copied to clipboar");
   const userId = useSelector((state: RootState) => state.user.userId);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const pageVisited = async () => {
+      try {
+        const { data }: AxiosResponseUser = await axios.post(`${import.meta.env.VITE_BASE}/getUserById`, {
+          userId,
+        });
+        setUserInfo(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    pageVisited();
+  }, [userId]);
 
   const fetchData = async () => {
     const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
@@ -140,6 +156,10 @@ const Profile = () => {
 
   const handleOpenSnackbar = () => {
     setOpen(true);
+  };
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigate("/");
   };
 
   const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: string) => {
@@ -150,7 +170,6 @@ const Profile = () => {
     }
   };
   const urls = useSelector((state: RootState) => state.user.urls);
-  console.log("Profile", urls);
 
   return (
     <Stack
@@ -167,7 +186,6 @@ const Profile = () => {
         sx={{
           paddingTop: "120px",
           width: "100%",
-          backgroundColor: "#fff",
         }}
       >
         <Container maxWidth="sm">
@@ -179,8 +197,8 @@ const Profile = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography>Name: </Typography>
-              <Typography>Ikboljon Abdurasulov</Typography>
+              <Typography>Username: </Typography>
+              <Typography>{userInfo.username}</Typography>
             </Stack>
             <Stack
               direction="row"
@@ -189,8 +207,8 @@ const Profile = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography>Age: </Typography>
-              <Typography>Not given</Typography>
+              <Typography>Email:</Typography>
+              <Typography>{userInfo.email}</Typography>
             </Stack>
             <Stack
               direction="row"
@@ -200,10 +218,11 @@ const Profile = () => {
               }}
             >
               <Typography>Shortened Urls: </Typography>
-              <Typography>18</Typography>
+              <Typography>{userInfo.urls?.length}</Typography>
             </Stack>
             <Button
               variant="outlined"
+              onClick={handleLogout}
               sx={{
                 color: red[500],
                 textTransform: "none",
@@ -231,7 +250,7 @@ const Profile = () => {
               }}
               onClick={fetchData}
             >
-              Click here to see all URLS info{" "}
+              Click here to see all URLS info
             </Button>
           </Stack>
         </Container>

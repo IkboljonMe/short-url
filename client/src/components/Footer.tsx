@@ -17,7 +17,7 @@ const Footer = () => {
       <Container sx={{ paddingTop: "10px", paddingBottom: "10px" }}>
         <Stack direction="row" sx={{ justifyContent: "center", fontWeight: "700" }}>
           <Typography align="center" variant="h6" sx={{ display: "flex", fontSize: theme.typography.h6 }}>
-            ©2023. All Right Reserved.
+            ©2023. All Rights Reserved.
           </Typography>
           <Link to="http://ikboljon.com">
             <Stack direction="row">

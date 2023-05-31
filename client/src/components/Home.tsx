@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AxiosResponse } from "../types/url";
+import { AxiosResponseUrl } from "../types/url";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -22,7 +22,7 @@ const Home = () => {
 
   const shortenUrl = async () => {
     if (input) {
-      const { data }: AxiosResponse = await axios.post(`${import.meta.env.VITE_BASE}/`, {
+      const { data }: AxiosResponseUrl = await axios.post(`${import.meta.env.VITE_BASE}/`, {
         origUrl: input,
         userId,
       });

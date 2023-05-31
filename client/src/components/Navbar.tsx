@@ -2,7 +2,7 @@ import { Container, Stack, Typography, Box, Theme } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoLogInOutline } from "react-icons/io5";
 import { FaUserTie } from "react-icons/fa";
 import { useMediaQuery } from "@mui/material";
@@ -42,46 +42,50 @@ const Navbar = () => {
             fontWeight: "700",
           }}
         >
-          <Stack
-            direction="row"
-            sx={{
-              display: isSmallScreen ? "none" : "flex",
-            }}
-          >
-            <Typography
-              align="right"
-              variant="h3"
+          <Link to="http://ikboljon.com">
+            <Stack
+              direction="row"
               sx={{
-                display: "flex",
-                fontSize: theme.typography.h3.fontSize,
+                display: isSmallScreen ? "none" : "flex",
               }}
             >
-              Ikboljon
-            </Typography>
+              <Typography
+                align="right"
+                variant="h3"
+                sx={{
+                  display: "flex",
+                  fontSize: theme.typography.h3.fontSize,
+                }}
+              >
+                Ikboljon
+              </Typography>
+              <Typography
+                variant="h3"
+                sx={{
+                  color: amber[700],
+                  fontWeight: "700",
+                  fontSize: theme.typography.h3.fontSize,
+                }}
+              >
+                Me
+              </Typography>
+            </Stack>
+          </Link>
+          <Link to="/">
             <Typography
-              variant="h3"
+              align="center"
+              variant="h2"
               sx={{
-                color: amber[700],
-                fontWeight: "700",
-                fontSize: theme.typography.h3.fontSize,
+                fontWeight: "bold",
+                color: blue[500],
+                fontSize: theme.typography.h2.fontSize,
+                zIndex: 9999,
+                paddingRight: "20px",
               }}
             >
-              Me
+              Short URL
             </Typography>
-          </Stack>
-          <Typography
-            align="center"
-            variant="h2"
-            sx={{
-              fontWeight: "bold",
-              color: blue[500],
-              fontSize: theme.typography.h2.fontSize,
-              zIndex: 9999,
-              paddingRight: "20px",
-            }}
-          >
-            Short URL
-          </Typography>
+          </Link>
 
           <Box
             component="div"
