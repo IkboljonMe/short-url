@@ -37,7 +37,10 @@ const userReducer = (state = initialState, action: UserAction) => {
     case userActions.CLEAR_AUTH_USER:
       localStorage.removeItem("AUTH_TOKEN");
       localStorage.removeItem("USER_ID");
-      return initialState;
+      return {
+        token: null,
+        userId: null,
+      };
     default:
       return state;
   }

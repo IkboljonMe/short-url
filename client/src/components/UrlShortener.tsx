@@ -14,7 +14,7 @@ const UrlShortener = () => {
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState(false);
   const [isVisitsPageOpen, setIsVisitsPageOpen] = useState(false);
-  if (!data) return <div>No data</div>;
+
   return (
     <Stack
       direction="column"
@@ -68,7 +68,7 @@ const UrlShortener = () => {
                 Copy the shortened link and share it in messages, texts, posts, websites and other locations.
               </Typography>
               <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
-                <TextField value={data.shortUrl} />
+                <TextField value={data ? data.shortUrl : "Re-shorten Url again"} />
                 <Button
                   variant="contained"
                   startIcon={<MdOutlineCopyAll />}
@@ -77,7 +77,7 @@ const UrlShortener = () => {
                     fontSize: theme.breakpoints.down("sm") ? "8px" : "20px",
                   }}
                   onClick={() => {
-                    navigator.clipboard.writeText(data.shortUrl);
+                    navigator.clipboard.writeText(data ? data.shortUrl : "No data,re shorten url again");
                     setIsCopied(true);
                   }}
                 >
@@ -127,7 +127,7 @@ const UrlShortener = () => {
                     fontSize: theme.typography.h6,
                   }}
                 >
-                  Total number of visits: {data.clicks}
+                  {data && `Total number of visits:`} {data && data.clicks}
                 </Typography>
               )}
             </Stack>
