@@ -1,4 +1,4 @@
-import { Container, Stack, Typography, Box, useMediaQuery } from "@mui/material";
+import { Container, Stack, Typography, Box } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import { responsiveFontSizes } from "@mui/material";
