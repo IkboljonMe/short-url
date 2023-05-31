@@ -31,6 +31,7 @@ const userReducer = (state = initialState, action: UserAction) => {
       };
     case userActions.SET_USER_URL:
       return {
+        ...state,
         urls: action.payload.urls,
       };
     case userActions.CLEAR_AUTH_USER:

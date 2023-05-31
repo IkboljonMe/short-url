@@ -74,6 +74,7 @@ const UrlShortener = () => {
                   startIcon={<MdOutlineCopyAll />}
                   sx={{
                     textTransform: "none",
+                    fontSize: theme.breakpoints.down("sm") ? "8px" : "20px",
                   }}
                   onClick={() => {
                     navigator.clipboard.writeText(data.shortUrl);

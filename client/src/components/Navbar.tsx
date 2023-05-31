@@ -1,26 +1,20 @@
 import { Container, Stack, Typography, Box, Theme } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { setUserUrls } from "../../redux/reducers/user";
 import { useNavigate } from "react-router-dom";
 import { IoLogInOutline } from "react-icons/io5";
 import { FaUserTie } from "react-icons/fa";
 import { useMediaQuery } from "@mui/material";
 import { responsiveFontSizes } from "@mui/material/styles";
-import axios from "axios";
 import themes from "../theme";
 const Navbar = () => {
   const theme = responsiveFontSizes(themes);
   const auth = useSelector((state: RootState) => state.user.token);
-  const userId = useSelector((state: RootState) => state.user.userId);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const iconSize = isSmallScreen ? 24 : 35;
   const handleProfile: () => void = async () => {
-    const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
-    dispatch(setUserUrls(data));
     navigate("/profile");
   };
   return (
