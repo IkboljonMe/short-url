@@ -32,7 +32,8 @@ const Home = () => {
       direction="column"
       sx={{
         height: "100vh",
-        position: "relative",
+        display: "flex",
+        justifyContent: "space-between",
       }}
     >
       <Navbar />
@@ -40,8 +41,6 @@ const Home = () => {
         component="div"
         sx={{
           paddingTop: "60px",
-          width: "100%",
-          height: "120%",
           backgroundColor: "#fff",
         }}
       >

@@ -9,8 +9,6 @@ const Footer = () => {
       sx={{
         background: "#f8f8f8",
         width: "100%",
-        position: "absolute",
-        bottom: 0,
       }}
     >
       <Container sx={{ paddingTop: "10px", paddingBottom: "10px" }}>
