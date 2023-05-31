@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const [input, setInput] = useState("");
   const userId = useSelector((state: RootState) => state.user.userId);
-  console.log("@@@", userId);
   const auth = useSelector((state: RootState) => state.user.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,15 +28,20 @@ const Home = () => {
     }
   };
   return (
-    <>
+    <Stack
+      direction="column"
+      sx={{
+        height: "100vh",
+      }}
+    >
       <Navbar />
       <Box
         component="div"
         sx={{
-          paddingTop: "20px",
-          height: "100vh",
+          paddingTop: "60px",
           width: "100%",
-          backgroundColor: "#f9f9f9",
+          height: "120%",
+          backgroundColor: "#fff",
         }}
       >
         <Container maxWidth="sm">
@@ -49,12 +53,12 @@ const Home = () => {
           <Box
             p={5}
             sx={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #f8f8f8",
-              borderRadius: "5px",
+              backgroundColor: "#f8f8f8",
+              border: "5px solid #f9f8f8",
+              borderRadius: "10px",
               paddingTop: "20px",
               paddingBottom: "20px",
-              marginTop: "20px",
+              marginTop: "40px",
               marginBottom: "20px",
             }}
           >
@@ -87,12 +91,12 @@ const Home = () => {
             <Box
               component="div"
               sx={{
-                backgroundColor: "#ffffff",
-                border: "1px solid #f8f8f8",
-                borderRadius: "5px",
+                backgroundColor: "#f8f8f8",
+                border: "5px solid #f9f8f8",
+                borderRadius: "10px",
                 paddingTop: "20px",
                 paddingBottom: "20px",
-                marginTop: "20px",
+                marginTop: "40px",
                 marginBottom: "20px",
               }}
             >
@@ -107,7 +111,7 @@ const Home = () => {
                   </Link>
                 </Stack>
               </Stack>
-              <Typography align="center" variant="h5" gutterBottom>
+              <Typography align="center" variant="h5" p={2} gutterBottom>
                 Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes, browser extension, 50+ app
                 integrations and support
               </Typography>
@@ -116,7 +120,7 @@ const Home = () => {
         </Container>
       </Box>
       <Footer></Footer>
-    </>
+    </Stack>
   );
 };
 

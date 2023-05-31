@@ -6,8 +6,7 @@ import store from "../redux/store.ts";
 import { ThemeProvider } from "@mui/material/styles";
 import "./index.css";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-let theme = createTheme();
-theme = responsiveFontSizes(theme);
+import theme from "./theme.ts";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

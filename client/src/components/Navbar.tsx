@@ -1,30 +1,28 @@
-import { Container, Stack, Typography, Avatar, Box } from "@mui/material";
+import { Container, Stack, Typography, Box, Theme } from "@mui/material";
 import { blue, amber } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { clearUser, setUserUrls } from "../../redux/reducers/user";
+import { setUserUrls } from "../../redux/reducers/user";
 import { useNavigate } from "react-router-dom";
+import { IoLogInOutline } from "react-icons/io5";
+import { FaUserTie } from "react-icons/fa";
+import { useMediaQuery } from "@mui/material";
+import { responsiveFontSizes } from "@mui/material/styles";
 import axios from "axios";
-import theme from "../theme";
+import themes from "../theme";
 const Navbar = () => {
+  const theme = responsiveFontSizes(themes);
   const auth = useSelector((state: RootState) => state.user.token);
   const userId = useSelector((state: RootState) => state.user.userId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(auth);
-  const handleLogout = () => {
-    dispatch(clearUser());
-    navigate("/");
-  };
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme?.breakpoints?.down("sm"));
+  const iconSize = isSmallScreen ? 24 : 35;
   const handleProfile: () => void = async () => {
     const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
     dispatch(setUserUrls(data));
     navigate("/profile");
   };
-
   return (
     <Box
       component="div"
@@ -36,13 +34,44 @@ const Navbar = () => {
         zIndex: 9999999,
       }}
     >
-      <Container>
-        <Stack direction="row" sx={{ justifyContent: "space-between", fontWeight: "700" }}>
-          <Stack direction="row">
-            <Typography align="right" variant="h3" sx={{ display: "flex" }}>
+      <Container maxWidth="md">
+        <Stack
+          p={2}
+          direction="row"
+          sx={{
+            paddingRight: {
+              sm: "50px",
+              md: "30px",
+              lg: "20px",
+            },
+            justifyContent: "space-between",
+            fontWeight: "700",
+          }}
+        >
+          <Stack
+            direction="row"
+            sx={{
+              display: isSmallScreen ? "none" : "flex",
+            }}
+          >
+            <Typography
+              align="right"
+              variant="h3"
+              sx={{
+                display: "flex",
+                fontSize: theme.typography.h3.fontSize,
+              }}
+            >
               Ikboljon
             </Typography>
-            <Typography variant="h3" sx={{ color: amber[700], fontWeight: "700" }}>
+            <Typography
+              variant="h3"
+              sx={{
+                color: amber[700],
+                fontWeight: "700",
+                fontSize: theme.typography.h3.fontSize,
+              }}
+            >
               Me
             </Typography>
           </Stack>
@@ -52,18 +81,27 @@ const Navbar = () => {
             sx={{
               fontWeight: "bold",
               color: blue[500],
-              fontSize: theme.breakpoints.down("sm") ? "16px" : "inherit",
+              fontSize: theme.typography.h2.fontSize,
               zIndex: 9999,
+              paddingRight: "20px",
             }}
           >
             Short URL
           </Typography>
-          <Stack direction="row" spacing={3} sx={{ justifyContent: "center", alignItems: "center", fontWeight: "500" }}>
-            <Typography onClick={auth ? handleLogout : handleLogin} variant="h3">
-              {auth ? "Log out" : "Login"}
-            </Typography>
-            {auth && <Avatar onClick={handleProfile} />}
-          </Stack>
+
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {auth ? (
+              <FaUserTie color="#2196f3" size={iconSize} onClick={handleProfile} />
+            ) : (
+              <IoLogInOutline size={iconSize} onClick={() => navigate("/login")} />
+            )}
+          </Box>
         </Stack>
       </Container>
     </Box>

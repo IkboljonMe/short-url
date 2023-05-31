@@ -13,27 +13,33 @@ const UrlShortener = () => {
   const [isVisitsPageOpen, setIsVisitsPageOpen] = useState(false);
   if (!data) return <div>No data</div>;
   return (
-    <>
+    <Stack
+      direction="column"
+      sx={{
+        height: "100vh",
+      }}
+    >
       <Navbar />
       <Box
         component="div"
         sx={{
           paddingTop: "20px",
-          height: "100vh",
+          height: "120%",
           width: "100%",
-          backgroundColor: "#f9f9f9",
+          backgroundColor: "#fff",
         }}
       >
         <Container maxWidth="sm">
           <Box
             component="div"
+            p={5}
             sx={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #f8f8f8",
-              borderRadius: "5px",
+              backgroundColor: "#f8f8f8",
+              border: "5px solid #f9f8f8",
+              borderRadius: "10px",
               paddingTop: "20px",
               paddingBottom: "20px",
-              marginTop: "20px",
+              marginTop: "40px",
               marginBottom: "20px",
             }}
           >
@@ -103,7 +109,7 @@ const UrlShortener = () => {
         </Container>
       </Box>
       <Footer />
-    </>
+    </Stack>
   );
 };
 
