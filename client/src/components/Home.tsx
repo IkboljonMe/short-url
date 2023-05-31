@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
+import { FiLink } from "react-icons/fi";
 import themes from "../theme";
 
 const Home = () => {
@@ -53,7 +54,7 @@ const Home = () => {
             sx={{ display: "flex", alignContent: "center", textAlign: "center", justifyContent: "center", alignItems: "center" }}
           ></Stack>
           <Box
-            p={5}
+            p={3}
             sx={{
               backgroundColor: "#f8f8f8",
               border: "5px solid #f9f8f8",
@@ -79,7 +80,12 @@ const Home = () => {
                     setInput(e.target.value);
                   }}
                 />
-                <Button onClick={shortenUrl} variant="contained">
+                <Button
+                  onClick={shortenUrl}
+                  sx={{ fontSize: theme.breakpoints.down("sm") ? "8px" : "20px" }}
+                  startIcon={<FiLink />}
+                  variant="contained"
+                >
                   Shorten URL
                 </Button>
               </Stack>
