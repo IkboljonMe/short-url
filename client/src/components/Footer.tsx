@@ -15,15 +15,17 @@ const Footer = () => {
         <Stack direction="row" sx={{ justifyContent: "center", fontWeight: "700" }}>
           <Typography align="center" variant="h6" sx={{ display: "flex" }}>
             ©2023. All Right Reserved.
-            <Link to="http://ikboljon.com">
+          </Typography>
+          <Link to="http://ikboljon.com">
+            <Stack direction="row">
               <Typography variant="h6" sx={{ display: "flex" }}>
                 &nbsp;Ikboljon
-                <Typography variant="h6" sx={{ color: amber[700], fontWeight: "700" }}>
-                  Me
-                </Typography>
+              </Typography>{" "}
+              <Typography variant="h6" sx={{ color: amber[700], fontWeight: "700" }}>
+                Me
               </Typography>
-            </Link>
-          </Typography>
+            </Stack>
+          </Link>
         </Stack>
       </Container>
     </Box>

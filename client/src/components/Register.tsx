@@ -2,6 +2,8 @@ import { TextField, Box, Stack, Typography, Button } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/reducers/user";
 import axios from "axios";
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const registerHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,8 +30,10 @@ const Register = () => {
         email,
         password,
       });
-      localStorage.setItem("authToken", data.token);
-      console.log(data);
+      const { token, userId } = data;
+      dispatch(setUser(token, userId));
+      localStorage.setItem("AUTH_TOKEN", data.toke);
+      localStorage.setItem("USER_ID", data.userId);
 
       setTimeout(() => {
         navigate("/");

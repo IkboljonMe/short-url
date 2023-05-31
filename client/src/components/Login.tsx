@@ -11,7 +11,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(`${import.meta.env.VITE_BASE}/login`);
 
   const loginHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -19,6 +18,8 @@ const Login = () => {
       const { data } = await axios.post(`${import.meta.env.VITE_BASE}/login`, { email, password });
       const { token, userId } = data;
       dispatch(setUser(token, userId));
+      localStorage.setItem("AUTH_TOKEN", data.toke);
+      localStorage.setItem("USER_ID", data.userId);
       setTimeout(() => {
         navigate("/");
       }, 1800);

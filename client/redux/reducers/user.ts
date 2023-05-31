@@ -14,9 +14,11 @@ export const setUserUrls = (urls: urlData[]) => ({
   type: userActions.SET_USER_URL,
   payload: { urls },
 });
+const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN");
+const USER_ID = localStorage.getItem("USER_ID");
 const initialState: UserState = {
-  token: null,
-  userId: null,
+  token: AUTH_TOKEN || null,
+  userId: USER_ID || null,
   urls: null,
 };
 
@@ -32,6 +34,8 @@ const userReducer = (state = initialState, action: UserAction) => {
         urls: action.payload.urls,
       };
     case userActions.CLEAR_AUTH_USER:
+      localStorage.removeItem("AUTH_TOKEN");
+      localStorage.removeItem("USER_ID");
       return initialState;
     default:
       return state;
