@@ -145,9 +145,17 @@ const Profile = () => {
   };
 
   const getUrls = async () => {
-    const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, {
-      userId: user.userId,
-    });
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_BASE}/profile`,
+      {
+        userId: user.userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     dispatch(updateUserUrls(data));
     setIsOpenUrlsBox(!isOpenUrlsBox);
   };
