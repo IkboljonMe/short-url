@@ -20,15 +20,19 @@ function validateUrl(value) {
 
   return !!urlPattern.test(value);
 }
-const sendTokenAndUserId = (user, statusCode, res) => {
+const sendUser = (user, statusCode, res) => {
   const token = user.generateJwtFromUser();
   const userId = user._id;
+
   res.setHeader("Authorization", `Bearer ${token}`);
 
-  return res.status(statusCode).json({
-    success: true,
-    token,
-    userId,
+  res.status(statusCode).json({
+    userId: user._id,
+    username: user.username,
+    email: user.email,
+    urls: user.urls,
+    token: user.token,
+    date: user.date,
   });
 };
 const isTokenIncluded = (req) => {
@@ -49,7 +53,7 @@ module.exports = {
   validateUrl,
   validateUserInput,
   comparePassword,
-  sendTokenAndUserId,
+  sendUser,
   isTokenIncluded,
   getAccessTokenFromHeader,
 };

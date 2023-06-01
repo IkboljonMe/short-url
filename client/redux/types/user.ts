@@ -2,26 +2,29 @@ import { urlData } from "../../src/types/url";
 import * as userActions from "./userActions";
 
 export type UserState = {
+  userId: number | null;
   token: string | null;
-  userId: string | null;
+  username: string | null;
+  email: string | null;
+  date: number | null;
   urls: urlData[] | null;
 };
-export type UserAction = SetAuthUserAction | ClearAuthUserAction | SetUserUrlsAction;
+export type UserAction = SetUserAction | ClearUserAction | SetUserUrlsAction;
 
 type UserPayload = {
-  token?: string;
-  userId?: string;
-  urls?: urlData[];
+  data: UserState;
 };
-type SetAuthUserAction = {
-  type: typeof userActions.SET_AUTH_USER;
+type SetUserAction = {
+  type: typeof userActions.SET_USER;
   payload: UserPayload;
 };
 type SetUserUrlsAction = {
   type: typeof userActions.SET_USER_URL;
-  payload: UserPayload;
+  payload: {
+    urls: urlData[] | null;
+  };
 };
 
-type ClearAuthUserAction = {
-  type: typeof userActions.CLEAR_AUTH_USER;
+type ClearUserAction = {
+  type: typeof userActions.CLEAR_USER;
 };
