@@ -22,7 +22,6 @@ function validateUrl(value) {
 }
 const sendUser = (user, statusCode, res) => {
   const token = user.generateJwtFromUser();
-  const userId = user._id;
 
   res.setHeader("Authorization", `Bearer ${token}`);
 
@@ -31,7 +30,7 @@ const sendUser = (user, statusCode, res) => {
     username: user.username,
     email: user.email,
     urls: user.urls,
-    token: user.token,
+    token: token,
     date: user.date,
   });
 };

@@ -19,7 +19,7 @@ type SetUserAction = {
   payload: UserPayload;
 };
 type SetUserUrlsAction = {
-  type: typeof userActions.SET_USER_URL;
+  type: typeof userActions.UPDATE_USER_URLS;
   payload: {
     urls: urlData[] | null;
   };

@@ -10,8 +10,8 @@ export const setUser = (data: userData) => ({
 export const clearUser = () => ({
   type: userActions.CLEAR_USER,
 });
-export const setUserUrls = (urls: urlData[]) => ({
-  type: userActions.SET_USER_URL,
+export const updateUserUrls = (urls: urlData[]) => ({
+  type: userActions.UPDATE_USER_URLS,
   payload: { urls },
 });
 const jsonUserData: string | null = localStorage.getItem("USER");
@@ -39,7 +39,7 @@ const userReducer = (state = initialState, action: UserAction) => {
         urls: action.payload.data.urls,
         date: action.payload.data.date,
       };
-    case userActions.SET_USER_URL:
+    case userActions.UPDATE_USER_URLS:
       return {
         ...state,
         urls: action.payload.urls,
