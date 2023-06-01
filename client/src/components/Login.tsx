@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/reducers/user";
 import { blue } from "@mui/material/colors";
+import { AxiosResponseUser } from "../types/user";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,11 +17,13 @@ const Login = () => {
   const loginHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_BASE}/login`, { email, password });
-      const { token, userId } = data;
-      dispatch(setUser(token, userId));
-      localStorage.setItem("AUTH_TOKEN", data.toke);
-      localStorage.setItem("USER_ID", data.userId);
+      const { data }: AxiosResponseUser = await axios.post(`${import.meta.env.VITE_BASE}/login`, { email, password });
+      if (data) {
+        localStorage.setItem("USER", JSON.stringify(data));
+        dispatch(setUser(data));
+      } else {
+        setError("Check your inputs");
+      }
       setTimeout(() => {
         navigate("/");
       }, 1800);

@@ -3,15 +3,15 @@ import { red, blue } from "@mui/material/colors";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RootState } from "../../redux/store";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RiFileCopy2Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUser, setUserUrls } from "../../redux/reducers/user";
-import axios from "axios";
+import { clearUser, updateUserUrls } from "../../redux/reducers/user";
 import { urlData } from "../types/url";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { AxiosResponseUser, userData } from "../types/user";
+import axios from "axios";
+import { userData } from "../types/user";
 interface UrlCardProps {
   url: urlData;
   index: number;
@@ -129,30 +129,12 @@ const UrlCard: React.FC<UrlCardProps> = ({ url, index, setCopyMessage, handleOpe
   );
 };
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState<userData>({});
   const [open, setOpen] = useState(false);
+  const [isOpenUrlsBox, setIsOpenUrlsBox] = useState(false);
   const navigate = useNavigate();
   const [copyMessage, setCopyMessage] = useState("Link copied to clipboar");
-  const userId = useSelector((state: RootState) => state.user.userId);
+  const user: userData = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const pageVisited = async () => {
-      try {
-        const { data }: AxiosResponseUser = await axios.post(`${import.meta.env.VITE_BASE}/getUserById`, {
-          userId,
-        });
-        setUserInfo(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    pageVisited();
-  }, [userId]);
-
-  const fetchData = async () => {
-    const { data } = await axios.post(`${import.meta.env.VITE_BASE}/profile`, { userId });
-    dispatch(setUserUrls(data));
-  };
 
   const handleOpenSnackbar = () => {
     setOpen(true);
@@ -162,6 +144,21 @@ const Profile = () => {
     navigate("/");
   };
 
+  const getUrls = async () => {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_BASE}/profile`,
+      {
+        userId: user.userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    dispatch(updateUserUrls(data));
+    setIsOpenUrlsBox(!isOpenUrlsBox);
+  };
   const handleCloseSnackbar = (event: React.SyntheticEvent | Event, reason?: string) => {
     event.preventDefault();
     setOpen(false);
@@ -198,7 +195,7 @@ const Profile = () => {
               }}
             >
               <Typography>Username: </Typography>
-              <Typography>{userInfo.username}</Typography>
+              <Typography>{user.username}</Typography>
             </Stack>
             <Stack
               direction="row"
@@ -208,7 +205,7 @@ const Profile = () => {
               }}
             >
               <Typography>Email:</Typography>
-              <Typography>{userInfo.email}</Typography>
+              <Typography>{user.email}</Typography>
             </Stack>
             <Stack
               direction="row"
@@ -218,7 +215,7 @@ const Profile = () => {
               }}
             >
               <Typography>Shortened Urls: </Typography>
-              <Typography>{userInfo.urls?.length}</Typography>
+              <Typography>{user.urls?.length}</Typography>
             </Stack>
             <Button
               variant="outlined"
@@ -248,42 +245,50 @@ const Profile = () => {
                   background: blue[500],
                 },
               }}
-              onClick={fetchData}
+              onClick={getUrls}
             >
-              Click here to see all URLS info
+              {isOpenUrlsBox ? "Click here to collapse Urls list" : "Click here to see all URLS info"}
             </Button>
           </Stack>
         </Container>
       </Box>
 
-      <Box
-        component="div"
-        sx={{
-          paddingTop: "70px",
-          width: "100%",
-          height: "120%",
-          backgroundColor: "#fff",
-          paddingBottom: "120px",
-        }}
-      >
-        <Container maxWidth="sm">
-          <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseSnackbar} message="Note archived">
-            <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
-              {copyMessage}
-            </Alert>
-          </Snackbar>
-          <Stack
-            spacing={6}
-            sx={{ display: "flex", alignContent: "center", textAlign: "center", justifyContent: "center", alignItems: "center" }}
-            direction="column"
-          >
-            {urls &&
-              urls.map((url, index) => (
-                <UrlCard url={url} index={index} setCopyMessage={setCopyMessage} handleOpenSnackbar={handleOpenSnackbar} />
-              ))}
-          </Stack>
-        </Container>
-      </Box>
+      {isOpenUrlsBox && (
+        <Box
+          component="div"
+          sx={{
+            paddingTop: "70px",
+            width: "100%",
+            height: "120%",
+            backgroundColor: "#fff",
+            paddingBottom: "120px",
+          }}
+        >
+          <Container maxWidth="sm">
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleCloseSnackbar} message="Note archived">
+              <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
+                {copyMessage}
+              </Alert>
+            </Snackbar>
+            <Stack
+              spacing={6}
+              sx={{
+                display: "flex",
+                alignContent: "center",
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              direction="column"
+            >
+              {urls &&
+                urls.map((url, index) => (
+                  <UrlCard url={url} index={index} setCopyMessage={setCopyMessage} handleOpenSnackbar={handleOpenSnackbar} />
+                ))}
+            </Stack>
+          </Container>
+        </Box>
+      )}
       <Footer />
     </Stack>
   );

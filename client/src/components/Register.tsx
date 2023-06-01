@@ -30,10 +30,12 @@ const Register = () => {
         email,
         password,
       });
-      const { token, userId } = data;
-      dispatch(setUser(token, userId));
-      localStorage.setItem("AUTH_TOKEN", data.toke);
-      localStorage.setItem("USER_ID", data.userId);
+      if (data) {
+        localStorage.setItem("USER", JSON.stringify(data));
+        dispatch(setUser(data));
+      } else {
+        setError("Check your inputs");
+      }
 
       setTimeout(() => {
         navigate("/");

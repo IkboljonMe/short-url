@@ -2,7 +2,7 @@ const User = require("../models/User");
 const {
   validateUserInput,
   comparePassword,
-  sendTokenAndUserId,
+  sendUser,
 } = require("../utils/utils");
 
 const register = async (req, res, next) => {
@@ -12,40 +12,24 @@ const register = async (req, res, next) => {
     email,
     password,
   });
-  sendTokenAndUserId(newUser, 201, res);
+  sendUser(newUser, 200, res);
 };
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!validateUserInput(email, password)) {
-    return next(new CustomError("Please check your inputs", 400));
+    return next(new Error("Please check your inputs"));
   }
 
   const user = await User.findOne({ email }).select("+password");
-
   if (!user) {
-    return next(new Error("NO user found"));
+    return next(new Error("No user found"));
   }
-
   if (!comparePassword(password, user.password)) {
     return next(new Error("No correct password"));
   }
+  sendUser(user, 200, res);
+};
 
-  sendTokenAndUserId(user, 200, res);
-};
-const getUserById = async (req, res, next) => {
-  const { userId } = req.body;
-  const user = await User.findById(userId).populate("urls");
-  if (!user) {
-    res.status(401).json("No user found");
-    return next(new Error("NO user found"));
-  }
-  const { email, urls, username } = user;
-  res.status(201).json({
-    username,
-    email,
-    urls,
-  });
-};
-module.exports = { register, login, getUserById };
+module.exports = { register, login };
