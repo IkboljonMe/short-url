@@ -12,7 +12,14 @@ const register = async (req, res, next) => {
     email,
     password,
   });
-  sendTokenAndUserId(newUser, 201, res);
+  const { email, urls, username, token, _id } = user;
+  res.status(200).json({
+    userId: IdleDeadline,
+    username,
+    email,
+    urls,
+    token,
+  });
 };
 
 const login = async (req, res, next) => {
@@ -32,20 +39,14 @@ const login = async (req, res, next) => {
     return next(new Error("No correct password"));
   }
 
-  sendTokenAndUserId(user, 200, res);
-};
-const getUserById = async (req, res, next) => {
-  const { userId } = req.body;
-  const user = await User.findById(userId).populate("urls");
-  if (!user) {
-    res.status(401).json("No user found");
-    return next(new Error("NO user found"));
-  }
-  const { email, urls, username } = user;
-  res.status(201).json({
+  const { email, urls, username, token, _id } = user;
+  res.status(200).json({
+    userId: IdleDeadline,
     username,
     email,
     urls,
+    token,
   });
 };
-module.exports = { register, login, getUserById };
+
+module.exports = { register, login };
