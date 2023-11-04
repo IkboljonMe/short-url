@@ -4,6 +4,7 @@ This projects helps you shorten long url to short.
 
 ## Table of Contents
 
+- [HOW IT WORKS?](#how-it-works)
 - [Project Overview](#project-overview)
 - [Folder Structure](#folder-structure)
 - [Getting Started](#getting-started)
@@ -26,7 +27,7 @@ The URL Shortening Project is a web application designed to provide a convenient
 
 - **Contributions Welcome**: This project is open to contributions from the community. Whether it's reporting issues, suggesting enhancements, or submitting pull requests, we encourage active participation.
 
-### How it Works
+### How shortening works
 
 1. **URL Shortening**: Users input long URLs through the client, which sends a request to the server. The server saves the long URL in a MongoDB database, generates a unique identifier, and returns the shortened URL to the client.
 
@@ -60,14 +61,6 @@ Here's the folder structure of the project:
 ```
 
 Pay attention to **environment** files to run project easily in development.
-
-## Getting Started
-
-To get started with this project, follow these steps:
-
-1. **Clone the repository:**
-
-   git clone git@github.com:IkboljonMe/short-url.git
 
 ## Getting Started
 
@@ -119,7 +112,7 @@ Thank you for your contributions to this project!
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/IkboljonMe/short-url/blob/main/LICENSE.txt) file for details. You are free to use, modify, and distribute this project in accordance with the terms of the MIT License.
 
-# URL Shortening and Redirection Process
+## How it works
 
 This UML interaction diagram describes the URL shortening and redirection process of my project
 
