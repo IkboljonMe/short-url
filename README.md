@@ -1,6 +1,6 @@
 # Short URL
 
-This projects helps you shorten long url to short.
+This projects helps you shorten long url to short. Now project link itself is long as I use free domain😁, but later I will invest it(I mean new domain, better server and etc). [Link to the project](https://beamish-valkyrie-00af98.netlify.app/)
 
 ## Table of Contents
 
